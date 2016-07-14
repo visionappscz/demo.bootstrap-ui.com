@@ -1,0 +1,28 @@
+{% extends '_layouts/base.html.twig' %}
+
+{% set bodyClass = 'has-navbar-fixed-top' %}
+
+{% block sublayout %}
+    {% include '_partials/header.html.twig' %}
+
+    <main role="main" class="site-content">
+        {% block header %}{% endblock %}
+
+        <div class="section-content">
+            <div class="container">
+
+                {% block body %}{% endblock %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include '_partials/footer.html.twig' %}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/main.min.js') }}"></script>
+    <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('vendor/ckeditor/adapters/jquery.js') }}"></script>
+{% endblock %}

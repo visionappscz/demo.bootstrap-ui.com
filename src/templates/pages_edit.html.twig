@@ -1,0 +1,29 @@
+{% extends '_layouts/default.html.twig' %}
+
+{% set page_data = '' %}
+{% for item in data.pages if item.id == url_params.page_id %}
+    {% set page_data = item %}
+{% endfor %}
+
+{% block header %}
+    <section class="section-header section-header-condensed">
+        <div class="container">
+
+            <h1 class="section-header-title">
+                <span class="glyphicon glyphicon-align-left offset-right icon-shift-down text-muted" aria-hidden="true"></span>
+                Edit Page
+            </h1>
+
+        </div><!-- .container -->
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+            {% include '_partials/page_edit_form.html.twig' with { 'context': 'edit' } %}
+
+        </div>
+    </div><!-- .row -->
+{% endblock %}

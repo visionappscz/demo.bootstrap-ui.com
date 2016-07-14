@@ -1,0 +1,89 @@
+{% extends '_layouts/default.html.twig' %}
+
+{% block header %}
+    <section class="section-header section-header-condensed">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+
+                    <h1 class="section-header-title">
+                        <span class="glyphicon glyphicon-align-left offset-right icon-shift-down text-muted" aria-hidden="true"></span>
+                        Pages
+                    </h1>
+
+                </div>
+                <div class="col-sm-4">
+
+                    <a href="{{ path('pages_new') }}" class="btn btn-primary btn-raised cta">
+                        <span class="glyphicon glyphicon-plus-sign offset-right" aria-hidden="true"></span>
+                        New Page
+                    </a>
+
+                </div>
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section>
+{% endblock %}
+
+{% block body %}
+    {% if data.pages|length > 0 %}
+        <div class="table-responsive table-responsive-dropdowns">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th data-toggle="sort" data-sort-onload="asc" class="col-sm-7" tabindex="0">Title</th>
+                        <th data-toggle="sort" class="col-sm-2" tabindex="0">Updated</th>
+                        <th data-toggle="sort" class="col-sm-2" tabindex="0">Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for page in data.pages %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('pages_edit', { 'page_id': page.id }) }}">{{ page.title }}</a>
+                            </td>
+                            <td>
+                                <small class="text-nowrap">{{ page.time_updated|date('Y-m-d H:i') }}</small>
+                            </td>
+                            <td>
+                                {% if page.published %}
+                                    <a href="#" class="btn btn-success btn-raised btn-sm" title="Unpublish">
+                                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                        Published
+                                    </a>
+                                {% else %}
+                                    <a href="#" class="btn btn-default btn-raised btn-sm" title="Publish">
+                                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                                        Unpublished
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td class="table-cell-actions">
+                                <a href="{{ path('pages_edit', { 'page_id': page.id }) }}" class="item-action" title="Edit">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                                <button
+                                    type="button"
+                                    class="item-action item-action-danger"
+                                    data-toggle="confirm"
+                                    data-confirm-message="Do you really want to delete this item?"
+                                    data-confirm-yes="Yes"
+                                    data-confirm-no="No"
+                                    title="Delete"
+                                >
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>
+            <span class="glyphicon glyphicon-info-sign text-info offset-right" aria-hidden="true"></span>
+            There is nothing yet, please start with <a href="#">adding new page</a>.
+        </p>
+    {% endif %}
+{% endblock %}

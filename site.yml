@@ -1,0 +1,34 @@
+url:
+    canonical: demo.bootstrap-ui.com
+    extra: []
+
+locale: en_US
+
+router:
+    login: /
+    dashboard: /dashboard
+    orders_new: /orders/new
+    orders_delivered: /orders/delivered
+    orders_canceled: /orders/canceled
+    orders_edit: /orders/edit/{order_id}
+    pages: /pages
+    pages_new: /pages/add
+    pages_edit: /pages/edit/{page_id}
+
+data:
+    orders: orders.yml
+    pages: pages.yml
+
+tracking:
+    google_analytics: UA-43870012-4
+
+renderer:
+    login: login.html.twig
+    dashboard: dashboard.html.twig
+    orders_new: orders.html.twig
+    orders_delivered: orders.html.twig
+    orders_canceled: orders.html.twig
+    orders_edit: orders_edit.html.twig
+    pages: pages.html.twig
+    pages_new: pages_new.html.twig
+    pages_edit: pages_edit.html.twig

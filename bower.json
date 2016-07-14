@@ -1,0 +1,14 @@
+{
+  "name": "bootstrap-ui-demo",
+  "description": "Bootstrap UI demo",
+  "homepage": "http://demo.bootstrap-ui.com",
+  "authors": [
+    "Adam Kudrna <adam@visionapps.cz>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap.ui": "^2.0.0",
+    "picturefill": "~2.3.0"
+  }
+}

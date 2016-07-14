@@ -1,0 +1,15 @@
+{% extends '_layouts/base.html.twig' %}
+
+{% block sublayout %}
+    <main role="main" class="site-content aligner">
+        <div class="aligner-item">
+            <div class="container">
+
+                {% block body %}{% endblock %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include '_partials/footer.html.twig' with { 'fluid': true } %}
+{% endblock %}

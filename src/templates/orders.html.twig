@@ -1,0 +1,128 @@
+{% extends '_layouts/default.html.twig' %}
+
+{% block header %}
+    <section class="section-header section-header-condensed">
+        <div class="container">
+
+            <h1 class="section-header-title">
+                <span class="glyphicon glyphicon-inbox offset-right icon-shift-down text-muted" aria-hidden="true"></span>
+                Orders
+            </h1>
+
+            <nav>
+                <ul class="nav nav-tabs nav-tabs-header">
+                    <li{% if page starts with 'orders_new' %} class="active"{% endif %}>
+                        <a href="{{ path('orders_new') }}">
+                            <span class="glyphicon glyphicon-star offset-right" aria-hidden="true"></span>
+                            <span class="hidden-xs">New</span>
+                        </a>
+                    </li>
+                    <li{% if page starts with 'orders_delivered' %} class="active"{% endif %}>
+                        <a href="{{ path('orders_delivered') }}">
+                            <span class="glyphicon glyphicon-ok-sign offset-right" aria-hidden="true"></span>
+                            <span class="hidden-xs">Delivered</span>
+                        </a>
+                    </li>
+                    <li{% if page starts with 'orders_canceled' %} class="active"{% endif %}>
+                        <a href="{{ path('orders_canceled') }}">
+                            <span class="glyphicon glyphicon-remove-sign offset-right" aria-hidden="true"></span>
+                            <span class="hidden-xs">Canceled</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div><!-- .container -->
+    </section>
+{% endblock %}
+
+{% block body %}
+    {% if data.orders|length > 0 %}
+        <div class="table-responsive table-responsive-dropdowns">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="table-cell-id">#</th>
+                    <th data-toggle="sort" data-sort-onload="asc" class="col-sm-3" tabindex="0">Date</th>
+                    <th data-toggle="sort" class="col-sm-3" tabindex="0">Name</th>
+                    <th data-toggle="sort" class="col-sm-3 text-right" tabindex="0">Price USD</th>
+                    <th class="col-sm-2 text-center">Payment</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in data.orders %}
+                    <tr>
+                        <td class="table-cell-id">
+                            {{ order.id }}
+                        </td>
+                        <td>
+                            <a href="{{ path('orders_edit', { 'order_id': order.id }) }}" class="small text-nowrap">{{ order.time_created|date('Y-m-d H:i:s') }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('orders_edit', { 'order_id': order.id }) }}" class="text-nowrap">
+                                {{ order.first_name }}
+                                {{ order.last_name }}
+                            </a>
+                        </td>
+                        <td class="text-right">
+                            {{ order.price_total }}
+                        </td>
+                        <td class="text-center">
+                            {% if order.paid %}
+                                <span class="label label-default">Paid online</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-cell-actions">
+                            {% if page == 'orders_new' %}
+                                <a href="{{ path('orders_edit', { 'order_id': order.id }) }}" class="item-action" title="Edit">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                                {% if not order.delivered %}
+                                    <a href="#" class="item-action" title="Mark as delivered">
+                                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                    </a>
+                                {% endif %}
+                                <div class="btn-group">
+                                    <button class="item-action" type="button" id="itemOptions{{ loop.index }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="itemOptions{{ loop.index }}">
+                                        {% if not order.paid %}
+                                            <li>
+                                                <a href="#">
+                                                    <span class="glyphicon glyphicon-usd offset-right" aria-hidden="true"></span>
+                                                    Mark as paid
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if not order.canceled %}
+                                            <li>
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-dropdown"
+                                                    data-toggle="confirm"
+                                                    data-confirm-message="Do you really want to cancel this order?"
+                                                    data-confirm-yes="Yes"
+                                                    data-confirm-no="No"
+                                                >
+                                                    <span class="glyphicon glyphicon-remove-sign offset-right" aria-hidden="true"></span>
+                                                    Cancel order
+                                                </button>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>
+            <span class="glyphicon glyphicon-info-sign text-info offset-right" aria-hidden="true"></span>
+            There is nothing yet.
+        </p>
+    {% endif %}
+{% endblock %}

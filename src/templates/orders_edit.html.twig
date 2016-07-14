@@ -1,0 +1,177 @@
+{% extends '_layouts/default.html.twig' %}
+
+{% set order_data = '' %}
+{% for item in data.orders if item.id == url_params.order_id %}
+    {% set order_data = item %}
+{% endfor %}
+
+{% block header %}
+    <section class="section-header section-header-condensed">
+        <div class="container">
+
+            <h1 class="section-header-title">
+                <span class="glyphicon glyphicon-inbox offset-right icon-shift-down text-muted" aria-hidden="true"></span>
+                Order #{{ order_data.id }}
+            </h1>
+
+        </div><!-- .container -->
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+            <form>
+
+                <fieldset class="offset-bottom">
+                    <legend>Buyer</legend>
+                    <div class="row">
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label for="first_name" class="required">First name</label>
+                                <input type="text" id="first_name" class="form-control" value="{{ order_data.first_name }}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name" class="required">Last name</label>
+                                <input type="text" id="last_name" class="form-control" value="{{ order_data.last_name }}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="required">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                    </span>
+                                    <input type="email" id="email" class="form-control" value="{{ order_data.email }}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Notes</label>
+                                <textarea id="note" class="form-control" rows="3">{{ order_data.notes }}</textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label for="address_street" class="required">Street</label>
+                                <input type="text" id="address_street" class="form-control" value="{{ order_data.address_street }}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="address_city" class="required">City</label>
+                                <input type="text" id="address_city" class="form-control" value="{{ order_data.address_city }}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="address_postal_code" class="required">Postal code</label>
+                                <input type="text" id="address_postal_code" class="form-control" value="{{ order_data.address_postal_code }}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="address_country" class="required">Country</label>
+                                <input type="text" id="address_country" class="form-control" value="{{ order_data.address_country }}" />
+                            </div>
+
+                        </div>
+                    </div><!-- .row -->
+                </fieldset>
+
+                <fieldset class="offset-bottom">
+                    <legend>Ordered Products</legend>
+                    {% if order_data.products|length > 0 %}
+                        {% set subtotal = 0 %}
+                        <div class="table-responsive">
+                            <table class="table form-inline">
+                                <tbody>
+                                    {% for product in order_data.products %}
+                                        <tr>
+                                            <td class="col-sm-1 text-nowrap">
+                                                <label for="amount_{{ loop.index }}" class="sr-only">Amount</label>
+                                                <input
+                                                    type="number"
+                                                    id="amount_{{ loop.index }}"
+                                                    class="form-control input-sm text-center offset-right"
+                                                    min="1" max="99"
+                                                    value="{{ product.amount }}"
+                                                />
+                                                &times;
+                                            </td>
+                                            <td>
+                                                {{ product.title }}
+                                                <button
+                                                    type="button"
+                                                    class="item-action item-action-danger"
+                                                    data-toggle="confirm"
+                                                    data-confirm-message="Do you really want to remove this item?"
+                                                    data-confirm-yes="Yes"
+                                                    data-confirm-no="No"
+                                                    title="Cancel"
+                                                >
+                                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                                                </button>
+                                            </td>
+                                            <td class="col-sm-2 text-right">{{ product.price }}</td>
+                                            <td class="col-sm-2 text-right">{{ product.amount * product.price }}</td>
+                                        </tr>
+                                        {% set subtotal = subtotal + product.amount * product.price %}
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">Subtotal:</th>
+                                        <td class="text-right">{{ subtotal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">
+                                            <label for="discount">Discount:</label>
+                                        </th>
+                                        <td class="text-right">
+                                            <input type="number" id="discount" class="form-control input-sm text-right" max="0" value="{{ order_data.discount }}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Postage:</th>
+                                        <td class="text-right">5</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">VAT:</th>
+                                        <td class="text-right">{{ order_data.vat }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Total:</th>
+                                        <td class="text-right text-nowrap">
+                                            <strong class="h4">USD {{ order_data.price_total }}</strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>
+                            <span class="glyphicon glyphicon-info-sign text-info offset-right" aria-hidden="true"></span>
+                            There is nothing yet.
+                        </p>
+                    {% endif %}
+                </fieldset>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-raised" value="Save changes" />
+                    {% if not order_data.paid %}
+                        <input type="submit" class="btn btn-default btn-raised" value="Mark as paid" />
+                    {% endif %}
+                    {% if not order_data.delivered %}
+                        <input type="submit" class="btn btn-default btn-raised" value="Mark as delivered" />
+                    {% endif %}
+                    {% if not order_data.canceled %}
+                        <input type="submit" class="btn btn-danger btn-raised" value="Cancel order" />
+                    {% endif %}
+                    <div class="form-action-static">
+                        or
+                        <a href="{{ path('orders_new') }}">cancel</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div><!-- .row -->
+{% endblock %}
