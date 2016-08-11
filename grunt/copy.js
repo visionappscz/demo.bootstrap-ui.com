@@ -16,6 +16,8 @@ module.exports = {
         src: ['**/*'],
         dest: '<%= paths.dist %>/fonts/',
       },
+    ],
+    vendor: [
       {
         expand: true,
         cwd: '<%= paths.bower %>/',
