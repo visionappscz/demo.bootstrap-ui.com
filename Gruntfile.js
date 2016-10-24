@@ -18,8 +18,6 @@ module.exports = function (grunt) {
 
     // Development
     devUrl: 'demo.bootstrap-ui.com.localhost',
-    devBrowser: 'google chrome',
-
   };
 
   require('time-grunt')(grunt);
