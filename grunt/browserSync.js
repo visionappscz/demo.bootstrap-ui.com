@@ -8,6 +8,7 @@ module.exports = {
         '<%= paths.dist %>/css/*.css',
         '<%= paths.dist %>/js/*.js',
         '<%= paths.dist %>/images/**/*',
+        '<%= paths.data %>/**/*',
         '<%= paths.templates %>/**/*.html.twig',
       ],
     },
