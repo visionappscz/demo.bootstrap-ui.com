@@ -6,7 +6,7 @@ module.exports = {
     files: [
       {
         expand: true,
-        cwd: '<%= paths.bower %>/bootstrap.ui/src',
+        cwd: '<%= paths.npm %>/bootstrap-ui/src',
         src: ['images/*.svg'],
         dest: '<%= paths.dist %>/',
       },
