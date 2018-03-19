@@ -17,7 +17,9 @@ module.exports = {
         dest: '<%= paths.dist %>/fonts/',
       },
     ],
-    vendor: [
+  },
+  vendor: {
+    files: [
       {
         expand: true,
         cwd: '<%= paths.npm %>/',
@@ -26,5 +28,4 @@ module.exports = {
       },
     ],
   },
-
 };
