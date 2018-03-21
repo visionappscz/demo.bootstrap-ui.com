@@ -11,7 +11,7 @@ module.exports = function (grunt) {
     paths: {
       src: 'resources',
       dist: 'web',
-      bower: 'bower_components',
+      npm: 'node_modules',
       data: 'src/data',
       templates: 'src/templates',
       temp: '.tmp',

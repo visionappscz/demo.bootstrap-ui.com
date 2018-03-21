@@ -12,19 +12,20 @@ module.exports = {
       },
       {
         expand: true,
-        cwd: '<%= paths.bower %>/bootstrap/fonts/',
+        cwd: '<%= paths.npm %>/bootstrap/fonts/',
         src: ['**/*'],
         dest: '<%= paths.dist %>/fonts/',
       },
     ],
-    vendor: [
+  },
+  vendor: {
+    files: [
       {
         expand: true,
-        cwd: '<%= paths.bower %>/',
+        cwd: '<%= paths.npm %>/',
         src: ['ckeditor/**/*'],
         dest: '<%= paths.dist %>/vendor/',
       },
     ],
   },
-
 };
