@@ -25,6 +25,7 @@
     "node": "^8.9.0"
   },
   "dependencies": {
-    "bootstrap-ui": "^3.0.0"
+    "bootstrap-ui": "^3.0.0",
+    "jquery": "^3.3.1"
   }
 }
