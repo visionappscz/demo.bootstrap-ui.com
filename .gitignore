@@ -8,6 +8,8 @@
 /web/css/*
 /web/fonts/*
 /web/js/*
+!/web/js/external
+/web/js/external/*
 /web/images/*
 /web/vendor/*
 
