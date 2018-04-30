@@ -20,7 +20,7 @@ data:
     pages: pages.yml
 
 tracking:
-    google_analytics: UA-43870012-4
+    google_analytics: js/external/google-analytics.js
 
 renderer:
     login: login.html.twig
@@ -32,3 +32,25 @@ renderer:
     pages: pages.html.twig
     pages_new: pages_new.html.twig
     pages_edit: pages_edit.html.twig
+
+header:
+    'Content-Security-Policy':
+        'default-src':
+            - "'self'"
+        'font-src':
+            - "'self'"
+            - "*.gstatic.com"
+        'img-src':
+            - "'self'"
+            - "data:"
+            - "satyr.io"
+            - "www.google-analytics.com"
+        'script-src':
+            - "'self'"
+            - "'unsafe-inline'"
+            - "*.googleapis.com"
+            - "www.google-analytics.com"
+        'style-src':
+            - "'self'"
+            - "'unsafe-inline'"
+            - "*.googleapis.com"

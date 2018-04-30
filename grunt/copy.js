@@ -1,7 +1,16 @@
 'use strict';
 
 module.exports = {
-
+  external: {
+    files: [
+      {
+        expand: true,
+        cwd: '<%= paths.src %>/js/external/',
+        src: ['*'],
+        dest: '<%= paths.dist %>/js/external/',
+      },
+    ],
+  },
   fonts: {
     files: [
       {
